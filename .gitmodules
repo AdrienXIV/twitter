@@ -1,3 +1,0 @@
-[submodule "public/jquery"] 
-  path = "/build/jquery/" 
-  url = git://https://github.com/AdrienXIV/twitter/
