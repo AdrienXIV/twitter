@@ -5,7 +5,7 @@ import "./sass/style.scss";
 import { HashRouter, Route, Switch } from "react-router-dom";
 
 ReactDOM.render(
-  <HashRouter basename="/">
+  <HashRouter>
     <Switch>
       <Route exact path="/" component={App} />
     </Switch>

@@ -35,7 +35,7 @@ const ProtectedRoute = ({ ...props }) => {
 
 const App = () => {
   return (
-    <Switch>
+    <div>
       <Navbar />
       <Route exact path="/login" component={Login} />
       <Route exact path="/logout" component={Logout} />
@@ -73,7 +73,7 @@ const App = () => {
       <Route path="*">
         <Redirect to="/login"></Redirect>
       </Route>
-    </Switch>
+    </div>
   );
 };
 
