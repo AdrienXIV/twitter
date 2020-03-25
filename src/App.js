@@ -1,6 +1,6 @@
 import React from "react";
 import { COOKIE } from "./utils/Cookie";
-import { Route, Redirect } from "react-router-dom";
+import { Route, Redirect, Switch } from "react-router-dom";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Logout } from "./components/Logout";
@@ -35,7 +35,7 @@ const ProtectedRoute = ({ ...props }) => {
 
 const App = () => {
   return (
-    <div>
+    <Switch>
       <Navbar />
       <Route exact path="/login" component={Login} />
       <Route exact path="/logout" component={Logout} />
@@ -73,7 +73,7 @@ const App = () => {
       <Route path="*">
         <Redirect to="/login"></Redirect>
       </Route>
-    </div>
+    </Switch>
   );
 };
 
