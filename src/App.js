@@ -3,7 +3,7 @@ import { COOKIE } from "./utils/Cookie";
 import {
   Route,
   Switch,
-  BrowserRouter as Router,
+  HashRouter as Router,
   Redirect
 } from "react-router-dom";
 import { Home } from "./components/Home";
@@ -40,7 +40,7 @@ const ProtectedRoute = ({ ...props }) => {
 
 const App = () => {
   return (
-    <Router basename="/twitter/">
+    <Router basename="/">
       <Navbar />
       <Switch>
         <Route exact path="/login" component={Login} />
