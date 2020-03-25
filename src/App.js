@@ -40,7 +40,7 @@ const ProtectedRoute = ({ ...props }) => {
 
 const App = () => {
   return (
-    <Router basename="/twitter">
+    <Router basename="/twitter/">
       <Navbar />
       <Switch>
         <Route exact path="/login" component={Login} />
