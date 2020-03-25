@@ -1,11 +1,6 @@
 import React from "react";
 import { COOKIE } from "./utils/Cookie";
-import {
-  Route,
-  Switch,
-  HashRouter as Router,
-  Redirect
-} from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Logout } from "./components/Logout";
@@ -40,47 +35,45 @@ const ProtectedRoute = ({ ...props }) => {
 
 const App = () => {
   return (
-    <Router basename="/">
+    <Switch>
       <Navbar />
-      <Switch>
-        <Route exact path="/login" component={Login} />
-        <Route exact path="/logout" component={Logout} />
-        <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
-          exact
-          path="/"
-          component={Home}
-        />
-        <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
-          exact
-          path="/users"
-          component={Users}
-        />
-        <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
-          exact
-          path="/new"
-          component={NewUser}
-        />
-        <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
-          exact
-          path="/twitter"
-          component={Twitter}
-        />
-        <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
-          exact
-          path="/twitter/:id"
-          component={Twitter}
-        />
+      <Route exact path="/login" component={Login} />
+      <Route exact path="/logout" component={Logout} />
+      <ProtectedRoute
+        isAllowed={COOKIE.getCookie("token")}
+        exact
+        path="/"
+        component={Home}
+      />
+      <ProtectedRoute
+        isAllowed={COOKIE.getCookie("token")}
+        exact
+        path="/users"
+        component={Users}
+      />
+      <ProtectedRoute
+        isAllowed={COOKIE.getCookie("token")}
+        exact
+        path="/new"
+        component={NewUser}
+      />
+      <ProtectedRoute
+        isAllowed={COOKIE.getCookie("token")}
+        exact
+        path="/twitter"
+        component={Twitter}
+      />
+      <ProtectedRoute
+        isAllowed={COOKIE.getCookie("token")}
+        exact
+        path="/twitter/:id"
+        component={Twitter}
+      />
 
-        <Route path="*">
-          <Redirect to="/login"></Redirect>
-        </Route>
-      </Switch>
-    </Router>
+      <Route path="*">
+        <Redirect to="/login"></Redirect>
+      </Route>
+    </Switch>
   );
 };
 
