@@ -77,7 +77,7 @@ export class Twitter extends React.Component {
                     tweets[i].entities.media.forEach(item => {
                       images.push(
                         <Image.Group key={childKey} size="small">
-                          <ModalMedia src={item.media_url} />
+                          <ModalMedia src={item.media_url_https} />
                         </Image.Group>
                       );
                       childKey++;
