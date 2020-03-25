@@ -1,6 +1,6 @@
 import React from "react";
 import { COOKIE } from "./utils/Cookie";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Redirect } from "react-router-dom";
 import { Home } from "./components/Home";
 import { Login } from "./components/Login";
 import { Logout } from "./components/Logout";
