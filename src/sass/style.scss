@@ -1,0 +1,122 @@
+html,
+body,
+#root {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+#login {
+  position: fixed;
+  width: 66.66%;
+  right: 0;
+  left: 0;
+  margin: 15% auto;
+  .column {
+    margin: 0 auto;
+  }
+  .two.column.grid {
+    width: 100%;
+  }
+}
+
+#twitter {
+  .header {
+    display: contents;
+  }
+  .tweet-header {
+    display: inline-flex;
+    align-items: center;
+    .content {
+      margin-top: 0;
+      margin-left: 2.5%;
+    }
+    .date {
+      margin-top: 1%;
+      span {
+        font-size: small;
+      }
+    }
+  }
+  .description {
+    display: inline-block;
+  }
+  .content {
+    margin-top: 2%;
+    p {
+      text-align: justify;
+    }
+  }
+  .images {
+    text-align: center;
+    width: 100%;
+    .image {
+      margin: 1%;
+      padding: 1em;
+    }
+  }
+}
+
+@media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {
+  #login {
+    width: 66.66%;
+    margin: 50% auto;
+    position: fixed;
+    right: 0;
+    left: 0;
+  }
+  #logout {
+    right: 0;
+    position: absolute;
+  }
+  
+
+  #new-user {
+    .header {
+      padding: 1rem;
+      .content {
+        font-size: large;
+      }
+    }
+    .message {
+      display: none;
+      margin: 5% auto;
+      width: 75%;
+    }
+    form {
+      margin-top: 15%;
+      .field {
+        width: 75%;
+        margin: 5% auto;
+      }
+      button {
+        display: block;
+        margin: 2.5% auto;
+        width: 75%;
+      }
+    }
+  }
+
+  #users {
+    .item {
+      padding: 1rem;
+      a {
+        display: flex;
+        align-items: center;
+      }
+      .right.floated.content {
+        margin-top: 2.5%;
+        i {
+          cursor: pointer;
+        }
+        i:hover {
+          color: #ea2027;
+        }
+      }
+    }
+    .item:hover {
+      background-color: #ecf0f1;
+    }
+  }
+}

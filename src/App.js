@@ -1,26 +1,87 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from "react";
+import { COOKIE } from "./utils/Cookie";
+import {
+  Route,
+  Switch,
+  BrowserRouter as Router,
+  Redirect
+} from "react-router-dom";
+import { Home } from "./components/Home";
+import { Login } from "./components/Login";
+import { Logout } from "./components/Logout";
+import { NewUser } from "./components/NewUser";
+import { Twitter } from "./components/Twitter";
+import { Navbar } from "./components/Navbar";
+import { Users } from "./components/Users";
+import API from "./utils/API";
+import io from "./utils/Socket.io";
 
-function App() {
+/*const PageNotFound = () => {
+  return <h1>404</h1>;
+};*/
+const ProtectedRoute = ({ ...props }) => {
+  let socketAuth = true;
+  io.socket.on("unauthorized", res => {
+    res === 0 ? (socketAuth = false) : (socketAuth = true);
+  });
+  // redirection si jamais le token envoyé dans les sockets est erroné
+  if (socketAuth) {
+    // réponse synchrone du serveur
+    return API.checkAuth().responseText === "JsonWebTokenError" ||
+      COOKIE.getCookie("token").length < 200 ? (
+      <Redirect to="/login" />
+    ) : (
+      <Route {...props} />
+    );
+  } else {
+    return <Redirect to="/login" />;
+  }
+};
+
+const App = () => {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router basename="/">
+      <Navbar />
+      <Switch>
+        <Route exact path="/login" component={Login} />
+        <Route exact path="/logout" component={Logout} />
+        <ProtectedRoute
+          isAllowed={COOKIE.getCookie("token")}
+          exact
+          path="/"
+          component={Home}
+        />
+        <ProtectedRoute
+          isAllowed={COOKIE.getCookie("token")}
+          exact
+          path="/users"
+          component={Users}
+        />
+        <ProtectedRoute
+          isAllowed={COOKIE.getCookie("token")}
+          exact
+          path="/new"
+          component={NewUser}
+        />
+        <ProtectedRoute
+          isAllowed={COOKIE.getCookie("token")}
+          exact
+          path="/twitter"
+          component={Twitter}
+        />
+        <ProtectedRoute
+          isAllowed={COOKIE.getCookie("token")}
+          exact
+          path="/twitter/:id"
+          component={Twitter}
+        />
+
+        <Route path="*">
+          <Redirect to="/login"></Redirect>
+        </Route>
+      </Switch>
+    </Router>
   );
-}
+};
 
 export default App;
