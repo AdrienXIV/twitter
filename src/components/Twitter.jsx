@@ -18,12 +18,10 @@ export class Twitter extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-  componentWillMount() {
-    let count = window.prompt("Nombre de tweets par personne ?", "5");
-    io.functions.getTweets(count);
-  }
 
   componentDidMount() {
+    let count = window.prompt("Nombre de tweets par personne ?", "5");
+    io.functions.getTweets(count);
     
     COOKIE.setCookie("users", "", 0);
     io.socket.on("tweets", data => {

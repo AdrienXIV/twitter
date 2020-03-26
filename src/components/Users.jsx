@@ -14,7 +14,7 @@ export class Users extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
-  componentWillMount() {
+  UNSAFE_componentWillMount() {
     API.getUsers().then(({ data }) => {
       for (let i = 0; i < data.length; i++) {
         this.setState({
