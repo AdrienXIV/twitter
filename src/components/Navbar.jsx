@@ -15,7 +15,7 @@ export class Navbar extends React.Component {
     const { activeItem } = this.state;
 
     return (
-      <Menu icon  size="huge" fixed='top' tabular>
+      <Menu id="navbar" icon size="huge" fixed='top' tabular>
         <Link to="/">
           <Menu.Item
             as={"span"}
