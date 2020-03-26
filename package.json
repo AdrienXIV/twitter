@@ -1,6 +1,5 @@
 {
   "name": "twitter",
-  "homepage": "https://AdrienXIV.github.io/twitter/",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
