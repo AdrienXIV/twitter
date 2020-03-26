@@ -2,10 +2,9 @@ html,
 body,
 #root {
   width: 100%;
-  height: 94vh;
+  height: 100vh;
   margin: 0;
   padding: 0;
-  position: relative;
 }
 
 #login {
@@ -23,9 +22,7 @@ body,
 }
 
 #twitter {
-  height: 94vh;
-  position: fixed;
-  overflow: auto;
+  padding-bottom: 5vh;
   .header {
     display: contents;
   }
