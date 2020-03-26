@@ -6,7 +6,10 @@ const socket = io.connect(__URL, __SOCKET_OPTIONS);
 
 const socket_functions = {
   getTweets: function(count) {
-    socket.emit("get_tweets", {token:COOKIE.getCookie("token"), count: Number(count)});
+    socket.emit("get_tweets", {
+      token: COOKIE.getCookie("token"),
+      count: Number(count)
+    });
   }
 };
 

@@ -27,6 +27,7 @@ export class Login extends React.Component {
 
     API.login(this.state.email, this.state.password)
       .then(res => {
+        console.log(res)
         if (res.status === 200) {
           COOKIE.setCookie("token", res.data, 0.5); // cookie 12h
           this.setState({ redirect: true });

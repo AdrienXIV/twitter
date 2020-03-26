@@ -3,8 +3,7 @@ import { Image, List, Segment } from "semantic-ui-react";
 import { ModalMedia } from "./ModalMedia";
 import io from "../utils/Socket.io";
 import ReactHtmlParser from "react-html-parser";
-import { COOKIE } from "../utils/Cookie";
-import {dateConverter} from "../utils/DateConverter"
+import { dateConverter } from "../utils/DateConverter";
 
 //TODO: faire un composant pour les tweets cités
 
@@ -18,12 +17,12 @@ export class Twitter extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
-
+  uns;
   componentDidMount() {
     let count = window.prompt("Nombre de tweets par personne ?", "5");
+    io.socket.open();
     io.functions.getTweets(count);
-    
-    COOKIE.setCookie("users", "", 0);
+
     io.socket.on("tweets", data => {
       this.setState({
         userHistory: [...this.state.userHistory, data.user]
@@ -34,6 +33,9 @@ export class Twitter extends React.Component {
         });
       });
     });
+  }
+  componentWillUnmount() {
+    io.socket.close();
   }
 
   handleChange = e => {
@@ -55,16 +57,16 @@ export class Twitter extends React.Component {
           <List>
             <List.Item>
               <div className="tweet-header">
-              <Image avatar src={tweets[i].user.profile_image_url_https} />
-              <List.Content>
-                <List.Header>{tweets[i].user.name}</List.Header>
-                <List.Description>
-                  @{tweets[i].user.screen_name}
-                </List.Description>
-                <List.Description className="date">
-                  <span>&bull;</span> {dateConverter(tweets[i].created_at)}
-                </List.Description>
-              </List.Content>
+                <Image avatar src={tweets[i].user.profile_image_url_https} />
+                <List.Content>
+                  <List.Header>{tweets[i].user.name}</List.Header>
+                  <List.Description>
+                    @{tweets[i].user.screen_name}
+                  </List.Description>
+                  <List.Description className="date">
+                    <span>&bull;</span> {dateConverter(tweets[i].created_at)}
+                  </List.Description>
+                </List.Content>
               </div>
               <List.Content>{ReactHtmlParser(tweets[i].text)}</List.Content>
               <List.Content>
