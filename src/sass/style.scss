@@ -6,6 +6,12 @@ body,
   margin: 0;
   padding: 0;
 }
+#root{
+  margin-top: 15%;
+}
+.ui.huge.icon.top.fixed menu{
+  background-color: white;
+}
 
 #login {
   position: fixed;
@@ -22,7 +28,6 @@ body,
 }
 
 #twitter {
-  margin-top: 15%;
   .header {
     display: contents;
   }
