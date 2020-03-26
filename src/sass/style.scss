@@ -6,9 +6,6 @@ body,
   margin: 0;
   padding: 0;
 }
-body{
-  position: fixed;
-}
 
 #login {
   position: fixed;
@@ -25,8 +22,6 @@ body{
 }
 
 #twitter {
-  overflow: auto;
-  height: 80vh;
   .header {
     display: contents;
   }
