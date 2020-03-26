@@ -57,7 +57,7 @@ export class Twitter extends React.Component {
           <List>
             <List.Item>
               <div className="tweet-header">
-              <Image avatar src={tweets[i].user.profile_image_url} />
+              <Image avatar src={tweets[i].user.profile_image_url_https} />
               <List.Content>
                 <List.Header>{tweets[i].user.name}</List.Header>
                 <List.Description>
