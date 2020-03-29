@@ -10,6 +10,16 @@ const socket_functions = {
       token: COOKIE.getCookie("token"),
       count: Number(count)
     });
+  },
+  getUsers: function() {
+    socket.emit("get_users", COOKIE.getCookie("token"));
+  },
+  getUserTweets: function(screen_name, count) {
+    socket.emit("get_userTweets", {
+      token: COOKIE.getCookie("token"),
+      screen_name,
+      count
+    });
   }
 };
 

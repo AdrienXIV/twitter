@@ -5,14 +5,15 @@ body {
   margin: 0;
   padding: 0;
 }
-img{
+img {
   cursor: pointer;
 }
-#root{
+#root {
   height: auto;
   margin-top: 5%;
 }
-#navbar{
+
+#navbar {
   background-color: white;
 }
 
@@ -30,9 +31,9 @@ img{
   }
 }
 
-#twitter {
+.twitter {
   .header {
-    display: contents;
+    width: max-content;
   }
   .tweet-header {
     display: inline-flex;
@@ -56,7 +57,7 @@ img{
     p {
       text-align: justify;
     }
-    a{
+    a {
       word-break: break-all;
     }
   }
@@ -68,13 +69,13 @@ img{
       padding: 1em;
     }
   }
-  .twitter-video{
+  .twitter-video {
     text-align: center;
   }
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {
-  #root{
+  #root {
     height: auto;
     margin-top: 15%;
   }
