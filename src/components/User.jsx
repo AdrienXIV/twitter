@@ -32,6 +32,12 @@ export class User extends React.Component {
     }
   }
 
+  isVerified() {
+    if (this.props.isVerified) {
+      return <Icon color="blue" name="check circle" />;
+    }
+  }
+
   render() {
     return (
       <Segment>
@@ -43,7 +49,9 @@ export class User extends React.Component {
             <div className="tweet-header">
               <Image avatar src={this.props.profile_image_url_https} />
               <List.Content>
-                <List.Header>{this.props.name}</List.Header>
+                <List.Header>
+                  {this.props.name} {this.isVerified()}
+                </List.Header>
                 <List.Description>@{this.props.screen_name}</List.Description>
               </List.Content>
             </div>

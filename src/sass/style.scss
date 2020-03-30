@@ -40,12 +40,10 @@ img {
 }
 
 .twitter {
-  .header {
-    width: max-content;
-  }
   .tweet-header {
     display: inline-flex;
     align-items: center;
+    width: 100%;
     .content {
       margin-top: 0;
       margin-left: 2.5%;

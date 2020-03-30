@@ -101,7 +101,7 @@ export class Tweet extends React.Component {
         <div className="tweet-header">
           <Image avatar src={retweet.user.profile_image_url_https} />
           <List.Content>
-            <List.Header>{retweet.user.name}</List.Header>
+            <List.Header>{retweet.user.name} {this.isVerified(retweet.user.verified)}</List.Header>
             <List.Description>@{retweet.user.screen_name}</List.Description>
           </List.Content>
         </div>
@@ -170,6 +170,12 @@ export class Tweet extends React.Component {
           <p>{ReactHtmlParser(tweet.full_text)}</p>
         </List.Content>
       );
+    }
+  }
+
+  isVerified(verified) {
+    if (verified) {
+      return <Icon color="blue" name="check circle" />;
     }
   }
 

@@ -49,6 +49,7 @@ export class Twitter extends React.Component {
           profile_image_url_https={item.profile_image_url_https}
           name={item.name}
           count={this.state.count}
+          isVerified={item.verified}
         />
       );
     });
