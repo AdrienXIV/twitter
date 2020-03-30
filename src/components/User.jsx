@@ -19,11 +19,16 @@ export class User extends React.Component {
     });
   };
 
-  iconRender() {
+  firstIconRender() {
     if (this.state.isClicked) {
       return <Icon name="arrow circle down" onClick={this.handleClick} />;
     } else {
       return <Icon name="arrow circle right" onClick={this.handleClick} />;
+    }
+  }
+  lastIconRender() {
+    if (this.state.isClicked) {
+      return <Icon name="arrow circle up" onClick={this.handleClick} />;
     }
   }
 
@@ -33,7 +38,7 @@ export class User extends React.Component {
         <List>
           <List.Item>
             <List.Content verticalAlign="middle" floated="right">
-              {this.iconRender()}
+              {this.firstIconRender()}
             </List.Content>
             <div className="tweet-header">
               <Image avatar src={this.props.profile_image_url_https} />
@@ -52,6 +57,14 @@ export class User extends React.Component {
             screen_name={this.props.screen_name}
             key={this.props.id}
           />
+
+          <List.Content
+            verticalAlign="middle"
+            floated="right"
+            style={{ textAlign: "right" }}
+          >
+            {this.lastIconRender()}
+          </List.Content>
         </List.Content>
       </Segment>
     );

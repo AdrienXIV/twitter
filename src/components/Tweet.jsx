@@ -1,21 +1,22 @@
 import React from "react";
-import { Image, List, Segment, Icon } from "semantic-ui-react";
+import { Image, List, Segment, Icon, Dimmer, Loader } from "semantic-ui-react";
 import io from "../utils/Socket.io";
 import { ModalMedia } from "./ModalMedia";
+import ReactHtmlParser from "react-html-parser";
+import { dateConverter } from "../utils/DateConverter.js";
 
 export class Tweet extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tweets: [],
-      isClicked: false
+      isClicked: false,
+      active: true // loader
     };
   }
 
   componentDidMount() {
-    io.socket.open();
     io.functions.getUserTweets(this.props.screen_name, this.props.count);
-
     io.socket.on(this.props.screen_name + "_tweets", data => {
       this.getTweets(data);
     });
@@ -29,10 +30,6 @@ export class Tweet extends React.Component {
     }
   }
 
-  componentWillUnmount() {
-    io.socket.close();
-  }
-
   getTweets(tweets) {
     for (let i = 0; i < tweets.length; i++) {
       if (tweets[i].retweeted_status !== undefined) {
@@ -41,6 +38,7 @@ export class Tweet extends React.Component {
         this.state.tweets.push(this.getContent(tweets[i], false, false));
       }
     }
+    this.setState({ active: false });
   }
 
   getTweetRT(tweet) {
@@ -50,17 +48,23 @@ export class Tweet extends React.Component {
   /**
    * @param {Object} tweet
    * @param {Boolean} RT
-   * @param {Boolean} IconRT - afficher l'icon de RT quand getTweetRt() est appelée
+   * @param {Boolean} IconRT - afficher l'icon de RT quand getTweetRt() est appelée, peut-être utilisé pour les conditions des retweets
    */
   getContent(tweet, RT, iconRT) {
     return (
       <Segment key={tweet.id}>
+        <List.Content floated="right" className="created_at">
+          <List.Description>{dateConverter(tweet.created_at)}</List.Description>
+        </List.Content>
+
         {(() => {
           if (iconRT) {
             return <Icon name="retweet" color="green" />;
           }
         })()}
+
         <List>
+          {this.RetweetHeader(tweet, iconRT)}
           <List.Item>
             {this.isRetweet(tweet, RT)}
 
@@ -91,6 +95,19 @@ export class Tweet extends React.Component {
       return this.getWebsiteUrl(tweet);
     }
   }
+  RetweetHeader(retweet, isretweet) {
+    if (isretweet) {
+      return (
+        <div className="tweet-header">
+          <Image avatar src={retweet.user.profile_image_url_https} />
+          <List.Content>
+            <List.Header>{retweet.user.name}</List.Header>
+            <List.Description>@{retweet.user.screen_name}</List.Description>
+          </List.Content>
+        </div>
+      );
+    }
+  }
 
   // getMedia() appelle getImage() ou getVideo()
   getMedia(media) {
@@ -107,11 +124,13 @@ export class Tweet extends React.Component {
   getImage(image) {
     return (
       <List.Content>
-        <Image.Group size="tiny">
+        <Image.Group size="small">
           {(() => {
             let images = [];
             image.forEach((item, index) => {
-              images.push(<ModalMedia key={index} src={item.media_url_https} />);
+              images.push(
+                <ModalMedia key={index} src={item.media_url_https} />
+              );
             });
             return images;
           })()}
@@ -129,11 +148,13 @@ export class Tweet extends React.Component {
       </List.Content>
     );
   }
+
+  // affichage du contenu du tweet avec un lien cliquable (site) ou non
   getWebsiteUrl(tweet) {
     if (tweet.entities.urls.length !== 0) {
       return (
         <List.Content>
-          <p>{tweet.full_text}</p>
+          <p>{ReactHtmlParser(tweet.full_text)}</p>
           <a
             rel="noopener noreferrer"
             target="_blank"
@@ -146,7 +167,7 @@ export class Tweet extends React.Component {
     } else {
       return (
         <List.Content>
-          <p>{tweet.full_text}</p>
+          <p>{ReactHtmlParser(tweet.full_text)}</p>
         </List.Content>
       );
     }
@@ -155,6 +176,11 @@ export class Tweet extends React.Component {
   render() {
     if (this.state.isClicked) {
       return this.state.tweets;
-    } else return null;
+    } else
+      return (
+        <Dimmer active={this.state.active} inverted>
+          <Loader inverted>Chargement des tweets.</Loader>
+        </Dimmer>
+      );
   }
 }

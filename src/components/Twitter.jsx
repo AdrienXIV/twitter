@@ -1,6 +1,7 @@
 import React from "react";
 import io from "../utils/Socket.io";
 import { User } from "./User";
+import { Icon } from "semantic-ui-react";
 
 export class Twitter extends React.Component {
   constructor(props) {
@@ -8,7 +9,8 @@ export class Twitter extends React.Component {
     this.state = {
       userHistory: [],
       users: [],
-      count: ""
+      count: "",
+      hasError: false
     };
     this.UserElement = React.createRef();
   }
@@ -24,10 +26,17 @@ export class Twitter extends React.Component {
       });
     });
   }
+
   componentWillUnmount() {
     io.socket.close();
   }
 
+  componentDidCatch(error, info) {
+    // Display fallback UI
+    this.setState({ hasError: true });
+    // You can also log the error to an error reporting service
+    alert(error + "\n" + info);
+  }
   getUsers() {
     let users_profiles = [];
     this.state.users.forEach((item, index) => {
@@ -47,6 +56,24 @@ export class Twitter extends React.Component {
   }
 
   render() {
-    return <div className="twitter">{this.getUsers(this.state.count)}</div>;
+    if (this.state.hasError) {
+      return <h2>Erreur.</h2>;
+    } else {
+      return (
+        <div className="twitter">
+          <div id="refresh">
+            <Icon
+              onClick={() => {
+                document.location.reload();
+              }}
+              color="blue"
+              size="large"
+              name="refresh"
+            />
+          </div>
+          {this.getUsers()}
+        </div>
+      );
+    }
   }
 }
