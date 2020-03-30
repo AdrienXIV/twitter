@@ -2,7 +2,7 @@ import React from "react";
 import { Image, List, Segment, Icon, Dimmer, Loader } from "semantic-ui-react";
 import io from "../utils/Socket.io";
 import { ModalMedia } from "./ModalMedia";
-import ReactHtmlParser from "react-html-parser";
+import decodeHtml from "decode-html";
 import { dateConverter } from "../utils/DateConverter.js";
 
 export class Tweet extends React.Component {
@@ -101,7 +101,9 @@ export class Tweet extends React.Component {
         <div className="tweet-header">
           <Image avatar src={retweet.user.profile_image_url_https} />
           <List.Content>
-            <List.Header>{retweet.user.name} {this.isVerified(retweet.user.verified)}</List.Header>
+            <List.Header>
+              {retweet.user.name} {this.isVerified(retweet.user.verified)}
+            </List.Header>
             <List.Description>@{retweet.user.screen_name}</List.Description>
           </List.Content>
         </div>
@@ -154,7 +156,7 @@ export class Tweet extends React.Component {
     if (tweet.entities.urls.length !== 0) {
       return (
         <List.Content>
-          <p>{ReactHtmlParser(tweet.full_text)}</p>
+          <p>{decodeHtml(tweet.full_text)}</p>
           <a
             rel="noopener noreferrer"
             target="_blank"
@@ -167,7 +169,8 @@ export class Tweet extends React.Component {
     } else {
       return (
         <List.Content>
-          <p>{ReactHtmlParser(tweet.full_text)}</p>
+          {}
+          <p>{decodeHtml(tweet.full_text)}</p>
         </List.Content>
       );
     }

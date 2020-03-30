@@ -21,14 +21,14 @@ export class User extends React.Component {
 
   firstIconRender() {
     if (this.state.isClicked) {
-      return <Icon name="arrow circle down" onClick={this.handleClick} />;
+      return <Icon size="large" name="arrow circle down" onClick={this.handleClick} />;
     } else {
-      return <Icon name="arrow circle right" onClick={this.handleClick} />;
+      return <Icon size="large" name="arrow circle right" onClick={this.handleClick} />;
     }
   }
   lastIconRender() {
     if (this.state.isClicked) {
-      return <Icon name="arrow circle up" onClick={this.handleClick} />;
+      return <Icon size="large" name="arrow circle up" onClick={this.handleClick} />;
     }
   }
 

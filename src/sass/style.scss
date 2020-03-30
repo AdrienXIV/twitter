@@ -5,7 +5,7 @@ body {
   margin: 0;
   padding: 0;
 }
-img {
+img, i {
   cursor: pointer;
 }
 #root {
@@ -13,11 +13,10 @@ img {
   margin-top: 5%;
 }
 
-#refresh{
+#refresh {
   text-align: end;
-  i{
+  i {
     margin: 1rem 1rem 0.5rem 0;
-    cursor: pointer;
   }
 }
 
