@@ -1,6 +1,5 @@
 import React from "react";
 import { Image, List, Segment, Icon } from "semantic-ui-react";
-import API from "../utils/API";
 import io from "../utils/Socket.io";
 import decodeHtml from "decode-html";
 import { Link } from "react-router-dom";
