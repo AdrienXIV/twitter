@@ -61,8 +61,8 @@ export class User extends React.Component {
             <List.Content verticalAlign="middle" floated="right">
               {this.firstIconRender()}
             </List.Content>
-            <Link  to={"/twitter/" + this.props.screen_name}>
-              <div className="tweet-header">
+            <div className="tweet-header">
+              <Link to={"/twitter/" + this.props.screen_name}>
                 <Image avatar src={this.props.profile_image_url_https} />
                 <List.Content>
                   <List.Header>
@@ -70,8 +70,8 @@ export class User extends React.Component {
                   </List.Header>
                   <List.Description>@{this.props.screen_name}</List.Description>
                 </List.Content>
-              </div>
-            </Link>
+              </Link>
+            </div>
           </List.Item>
         </List>
         <List.Content>

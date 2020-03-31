@@ -99,8 +99,8 @@ export class Tweet extends React.Component {
   RetweetHeader(retweet, isretweet) {
     if (isretweet) {
       return (
-        <Link to={"/twitter/" + retweet.user.screen_name}>
-          <div className="tweet-header">
+        <div className="tweet-header">
+          <Link to={"/twitter/" + retweet.user.screen_name}>
             <Image avatar src={retweet.user.profile_image_url_https} />
             <List.Content>
               <List.Header>
@@ -108,8 +108,8 @@ export class Tweet extends React.Component {
               </List.Header>
               <List.Description>@{retweet.user.screen_name}</List.Description>
             </List.Content>
-          </div>
-        </Link>
+          </Link>
+        </div>
       );
     }
   }
