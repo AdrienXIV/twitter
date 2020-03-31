@@ -4,6 +4,7 @@ import io from "../utils/Socket.io";
 import { ModalMedia } from "./ModalMedia";
 import decodeHtml from "decode-html";
 import { dateConverter } from "../utils/DateConverter.js";
+import { Link } from "react-router-dom";
 
 export class Tweet extends React.Component {
   constructor(props) {
@@ -98,15 +99,17 @@ export class Tweet extends React.Component {
   RetweetHeader(retweet, isretweet) {
     if (isretweet) {
       return (
-        <div className="tweet-header">
-          <Image avatar src={retweet.user.profile_image_url_https} />
-          <List.Content>
-            <List.Header>
-              {retweet.user.name} {this.isVerified(retweet.user.verified)}
-            </List.Header>
-            <List.Description>@{retweet.user.screen_name}</List.Description>
-          </List.Content>
-        </div>
+        <Link to={"/twitter/" + retweet.user.screen_name}>
+          <div className="tweet-header">
+            <Image avatar src={retweet.user.profile_image_url_https} />
+            <List.Content>
+              <List.Header>
+                {retweet.user.name} {this.isVerified(retweet.user.verified)}
+              </List.Header>
+              <List.Description>@{retweet.user.screen_name}</List.Description>
+            </List.Content>
+          </div>
+        </Link>
       );
     }
   }
