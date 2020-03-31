@@ -20,6 +20,12 @@ const socket_functions = {
       screen_name,
       count
     });
+  },
+  checkScreenName: function(screen_name) {
+    socket.emit("get_user", {
+      token: COOKIE.getCookie("token"),
+      screen_name
+    });
   }
 };
 

@@ -11,6 +11,7 @@ import {
   Label
 } from "semantic-ui-react";
 import $ from "jquery";
+import io from "../utils/Socket.io";
 
 export class NewUser extends React.Component {
   constructor(props) {
@@ -29,11 +30,14 @@ export class NewUser extends React.Component {
   componentDidMount() {
     API.getUsers()
       .then(({ data }) => {
-        console.log(data);
         this.setState({ users_number: data.length });
       })
       .catch(err => {
-        console.error(err);
+        this.setState({
+          message: err,
+          class: "negative"
+        });
+        this.showMessage();
       });
   }
 
@@ -45,16 +49,41 @@ export class NewUser extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-    API.setUser(this.state.name, Number(this.state.order))
-      .then(res => {
-        console.log(res);
-        this.successMessage(true, "");
-      })
-      .catch(err => {
-        console.log(err);
-        this.successMessage(false, String(err));
-      });
+
+    io.socket.open();
+    io.functions.checkScreenName(this.state.name);
+    io.socket.on("twitter_user", data => {
+      // si l'utilisateur twitter n'existe pas
+      if (data.errors !== undefined) {
+        if (data.errors[0].code === 50) {
+          this.setState({
+            message: "Utilisateur twitter inexistant.",
+            class: "negative"
+          });
+          this.showMessage();
+        }
+      } else {
+        API.setUser(this.state.name, Number(this.state.order))
+          .then(res => {
+            this.successMessage(true, "");
+          })
+          .catch(err => {
+            this.successMessage(false, String(err));
+          });
+      }
+    });
   };
+  componentWillUnmount() {
+    io.socket.close();
+  }
+
+  showMessage() {
+    $(".ui.message").show("fast");
+
+    setTimeout(() => {
+      $(".ui.message").hide("slow");
+    }, 5000);
+  }
 
   successMessage(success, errorMessage) {
     const codeError = HandlerError(errorMessage);
@@ -79,12 +108,7 @@ export class NewUser extends React.Component {
         message: message_error
       });
     }
-
-    $(".ui.message").show("fast");
-
-    setTimeout(() => {
-      $(".ui.message").hide("slow");
-    }, 5000);
+    this.showMessage();
   }
 
   render() {

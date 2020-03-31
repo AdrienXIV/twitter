@@ -24,7 +24,7 @@ export class Login extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
+  
     API.login(this.state.email, this.state.password)
       .then(res => {
         if (res.status === 200) {
