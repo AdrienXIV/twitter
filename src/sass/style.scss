@@ -66,6 +66,9 @@ i {
     a {
       word-break: break-all;
     }
+    .header {
+      width: max-content;
+    }
     .created_at {
       text-align: right;
       font-size: smaller;
