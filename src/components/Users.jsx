@@ -10,8 +10,7 @@ export class Users extends React.Component {
       promiseIsResolved: false,
       content: []
     };
-    this.handleChange = this.handleChange.bind(this);
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
   componentDidMount() {
@@ -26,9 +25,10 @@ export class Users extends React.Component {
                   title="Supprimer"
                   name="trash alternate"
                   data-id={data[i]._id}
+                  onClick={this.handleClick}
                 />
               </List.Content>
-              <Link to={"/twitter/" + data[i]._id}>
+              <Link to={"/twitter/" + data[i].name}>
                 <List.Icon
                   name="user circle"
                   size="big"
@@ -52,14 +52,25 @@ export class Users extends React.Component {
     });
   }
 
-  handleChange = e => {
-    this.setState({
-      [e.target.name]: e.target.value
-    });
-  };
-
-  handleSubmit = e => {
-    e.preventDefault();
+  handleClick = e => {
+    let r = window.confirm("Confirmer la suppression ?");
+    if (r) {
+      API.deleteUser(e.target.dataset.id)
+        .then(res => {
+          if (res.status === 200) {
+            let content = [...this.state.content];
+            content.forEach((item, index) => {
+              if (item.key === res.data._id) {
+                content.splice(index, 1);
+                this.setState({ content });
+              }
+            });
+          }
+        })
+        .catch(err => {
+          alert(err);
+        });
+    }
   };
 
   render() {

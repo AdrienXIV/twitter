@@ -5,8 +5,18 @@ body {
   margin: 0;
   padding: 0;
 }
-img, i {
+img,
+i {
   cursor: pointer;
+}
+#twitter-profile {
+  position: absolute;
+  margin-top: -11%;
+  border: 2px solid white;
+  background-color: white;
+  padding: 1px;
+  width: 20%;
+  margin-left: 5%;
 }
 #root {
   height: auto;
@@ -73,6 +83,9 @@ img, i {
   .twitter-video {
     text-align: center;
   }
+}
+#users {
+  padding: 1rem;
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {

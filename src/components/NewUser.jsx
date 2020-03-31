@@ -21,13 +21,35 @@ export class NewUser extends React.Component {
       order: 0,
       users_number: 0,
       message: "",
-      class: "positive"
+      class: "positive",
+      disabled: true
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentDidMount() {
+    io.socket.open();
+    io.socket.on("twitter_user", data => {
+      // si l'utilisateur twitter n'existe pas
+      if (data.errors !== undefined) {
+        if (data.errors[0].code === 50) {
+          this.setState({
+            message: "Utilisateur twitter inexistant.",
+            class: "negative"
+          });
+          this.showMessage();
+        }
+      } else {
+        this.setUser();
+      }
+    });
+    setInterval(() => {
+      this.state.name.length > 0
+        ? this.setState({ disabled: false })
+        : this.setState({ disabled: true });
+    }, 250);
+
     API.getUsers()
       .then(({ data }) => {
         this.setState({ users_number: data.length });
@@ -49,40 +71,27 @@ export class NewUser extends React.Component {
 
   handleSubmit = e => {
     e.preventDefault();
-
-    io.socket.open();
-    io.functions.checkScreenName(this.state.name);
-    io.socket.on("twitter_user", data => {
-      // si l'utilisateur twitter n'existe pas
-      if (data.errors !== undefined) {
-        if (data.errors[0].code === 50) {
-          this.setState({
-            message: "Utilisateur twitter inexistant.",
-            class: "negative"
-          });
-          this.showMessage();
-        }
-      } else {
-        API.setUser(this.state.name, Number(this.state.order))
-          .then(res => {
-            this.successMessage(true, "");
-          })
-          .catch(err => {
-            this.successMessage(false, String(err));
-          });
-      }
-    });
+    io.functions.checkScreenName(this.state.name); // vérifier si l'utilisateur existe dans twitter
   };
   componentWillUnmount() {
     io.socket.close();
   }
 
-  showMessage() {
-    $(".ui.message").show("fast");
+  setUser() {
+    if (this.state.name.length > 0) {
+      API.setUser(this.state.name, Number(this.state.order))
+        .then(res => {
+          return this.successMessage(true, "");
+        })
+        .catch(err => {
+          return this.successMessage(false, String(err));
+        });
+    }
+  }
 
-    setTimeout(() => {
-      $(".ui.message").hide("slow");
-    }, 5000);
+  showMessage() {
+    $(".ui.message").hide(); // enlever tous les messages si jamais il y en a un toujours d'afficher
+    $(".ui.message").show("fast").delay(5000).hide("slow");
   }
 
   successMessage(success, errorMessage) {
@@ -149,7 +158,7 @@ export class NewUser extends React.Component {
               value={this.state.order}
             />
           </Form.Field>
-          <Button type="submit" positive>
+          <Button type="submit" positive disabled={this.state.disabled}>
             Ajouter
           </Button>
 

@@ -15,6 +15,7 @@ import { Navbar } from "./components/Navbar";
 import { Users } from "./components/Users";
 import API from "./utils/API";
 import io from "./utils/Socket.io";
+import { UserProfile } from "./components/UserProfile";
 
 //TODO: tester deploiement sur heroku
 /*const PageNotFound = () => {
@@ -73,8 +74,8 @@ const App = () => {
         <ProtectedRoute
           isAllowed={COOKIE.getCookie("token")}
           exact
-          path="/twitter/:id"
-          component={Twitter}
+          path="/twitter/:user"
+          component={UserProfile}
         />
 
         <Route path="*">

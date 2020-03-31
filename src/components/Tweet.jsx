@@ -169,7 +169,6 @@ export class Tweet extends React.Component {
     } else {
       return (
         <List.Content>
-          {}
           <p>{decodeHtml(tweet.full_text)}</p>
         </List.Content>
       );

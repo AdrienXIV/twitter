@@ -51,6 +51,25 @@ class API extends React.Component {
         token: COOKIE.getCookie("token")
       }
     });
+  }  
+  getUser(id) {
+    return axios.request({
+      url: __URL + "/api/user/" + id,
+      method: "GET",
+      headers: {
+        token: COOKIE.getCookie("token")
+      }
+    });
+  }
+
+  deleteUser(id) {
+    return axios.request({
+      url: __URL + "/api/user/" + id,
+      method: "DELETE",
+      headers: {
+        token: COOKIE.getCookie("token")
+      }
+    });
   }
 
   /**

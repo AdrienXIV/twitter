@@ -1,6 +1,7 @@
 import React from "react";
 import { Image, List, Segment, Icon } from "semantic-ui-react";
 import { Tweet } from "./Tweet";
+import { Link } from "react-router-dom";
 
 export class User extends React.Component {
   constructor(props) {
@@ -21,14 +22,28 @@ export class User extends React.Component {
 
   firstIconRender() {
     if (this.state.isClicked) {
-      return <Icon size="large" name="arrow circle down" onClick={this.handleClick} />;
+      return (
+        <Icon
+          size="large"
+          name="arrow circle down"
+          onClick={this.handleClick}
+        />
+      );
     } else {
-      return <Icon size="large" name="arrow circle right" onClick={this.handleClick} />;
+      return (
+        <Icon
+          size="large"
+          name="arrow circle right"
+          onClick={this.handleClick}
+        />
+      );
     }
   }
   lastIconRender() {
     if (this.state.isClicked) {
-      return <Icon size="large" name="arrow circle up" onClick={this.handleClick} />;
+      return (
+        <Icon size="large" name="arrow circle up" onClick={this.handleClick} />
+      );
     }
   }
 
@@ -46,15 +61,17 @@ export class User extends React.Component {
             <List.Content verticalAlign="middle" floated="right">
               {this.firstIconRender()}
             </List.Content>
-            <div className="tweet-header">
-              <Image avatar src={this.props.profile_image_url_https} />
-              <List.Content>
-                <List.Header>
-                  {this.props.name} {this.isVerified()}
-                </List.Header>
-                <List.Description>@{this.props.screen_name}</List.Description>
-              </List.Content>
-            </div>
+            <Link  to={"/twitter/" + this.props.screen_name}>
+              <div className="tweet-header">
+                <Image avatar src={this.props.profile_image_url_https} />
+                <List.Content>
+                  <List.Header>
+                    {this.props.name} {this.isVerified()}
+                  </List.Header>
+                  <List.Description>@{this.props.screen_name}</List.Description>
+                </List.Content>
+              </div>
+            </Link>
           </List.Item>
         </List>
         <List.Content>
