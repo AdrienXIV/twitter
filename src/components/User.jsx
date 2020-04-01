@@ -77,7 +77,6 @@ export class User extends React.Component {
         <List.Content>
           <Tweet
             isClicked={this.state.isClicked}
-            count={this.props.count}
             ref={this.TweetElement}
             screen_name={this.props.screen_name}
             key={this.props.id}

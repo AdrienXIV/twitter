@@ -14,6 +14,8 @@ import $ from "jquery";
 import io from "../utils/Socket.io";
 
 export class NewUser extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super();
     this.state = {
@@ -29,6 +31,7 @@ export class NewUser extends React.Component {
   }
 
   componentDidMount() {
+    this._isMounted = true;
     io.socket.open();
     io.socket.on("twitter_user", data => {
       // si l'utilisateur twitter n'existe pas
@@ -45,9 +48,11 @@ export class NewUser extends React.Component {
       }
     });
     setInterval(() => {
-      this.state.name.length > 0
-        ? this.setState({ disabled: false })
-        : this.setState({ disabled: true });
+      if (this._isMounted) {
+        this.state.name.length > 0
+          ? this.setState({ disabled: false })
+          : this.setState({ disabled: true });
+      }
     }, 250);
 
     API.getUsers()
@@ -74,24 +79,36 @@ export class NewUser extends React.Component {
     io.functions.checkScreenName(this.state.name); // vérifier si l'utilisateur existe dans twitter
   };
   componentWillUnmount() {
+    this._isMounted = false;
     io.socket.close();
   }
 
   setUser() {
     if (this.state.name.length > 0) {
-      API.setUser(this.state.name, Number(this.state.order))
-        .then(res => {
-          return this.successMessage(true, "");
-        })
-        .catch(err => {
-          return this.successMessage(false, String(err));
-        });
+      // enregistrer sans espaces
+      let name = this.state.name.split(" ");
+      name.forEach((item, index) => {
+        if (index > 0) {
+          return;
+        }
+
+        API.setUser(item, Number(this.state.order))
+          .then(() => {
+            return this.successMessage(true, "");
+          })
+          .catch(err => {
+            return this.successMessage(false, String(err));
+          });
+      });
     }
   }
 
   showMessage() {
     $(".ui.message").hide(); // enlever tous les messages si jamais il y en a un toujours d'afficher
-    $(".ui.message").show("fast").delay(5000).hide("slow");
+    $(".ui.message")
+      .show("fast")
+      .delay(4000)
+      .hide("slow");
   }
 
   successMessage(success, errorMessage) {

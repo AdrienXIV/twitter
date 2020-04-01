@@ -5,8 +5,11 @@ import { ModalMedia } from "./ModalMedia";
 import decodeHtml from "decode-html";
 import { dateConverter } from "../utils/DateConverter.js";
 import { Link } from "react-router-dom";
+import { COOKIE } from "../utils/Cookie";
 
 export class Tweet extends React.Component {
+  _isMounted = false;
+
   constructor(props) {
     super(props);
     this.state = {
@@ -17,13 +20,24 @@ export class Tweet extends React.Component {
   }
 
   componentDidMount() {
-    io.functions.getUserTweets(this.props.screen_name, this.props.count);
+    this._isMounted = true;
+    
+    io.functions.getUserTweets(
+      this.props.screen_name,
+      Number(COOKIE.getCookie("number_of_tweets"))
+    );
     io.socket.on(this.props.screen_name + "_tweets", data => {
-      this.getTweets(data);
+      if (this._isMounted) {
+        this.getTweets(data);
+      }
     });
   }
 
-  componentWillReceiveProps(nextProps) {
+  componentWillUnmount() {
+    this._isMounted = false;
+  }
+
+  UNSAFE_componentWillReceiveProps(nextProps) {
     if (this.props !== nextProps) {
       this.setState({
         isClicked: nextProps.isClicked
