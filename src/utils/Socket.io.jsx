@@ -5,12 +5,6 @@ import { __URL, __SOCKET_OPTIONS } from "./info";
 const socket = io.connect(__URL, __SOCKET_OPTIONS);
 
 const socket_functions = {
-  getTweets: function(count) {
-    socket.emit("get_tweets", {
-      token: COOKIE.getCookie("token"),
-      count: Number(count)
-    });
-  },
   getUsers: function() {
     socket.emit("get_users", COOKIE.getCookie("token"));
   },
