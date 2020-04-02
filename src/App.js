@@ -30,7 +30,7 @@ const ProtectedRoute = ({ ...props }) => {
   // redirection si jamais le token envoyé dans les sockets est erroné
   if (socketAuth) {
     // réponse synchrone du serveur
-    return API.checkAuth().responseText === "JsonWebTokenError" ||
+    return API.checkAuth().status !== 200 ||
       COOKIE.getCookie("token").length < 200 ? (
       <Redirect to="/login" />
     ) : (
