@@ -3,7 +3,7 @@ import API from "../utils/API";
 import { HandlerError } from "../utils/ErrorHandler";
 import { Button, Input, Form, Icon, Message, Label } from "semantic-ui-react";
 import $ from "jquery";
-import { Redirect } from "react-router-dom";
+import { Redirect, Link } from "react-router-dom";
 
 export class EditUser extends React.Component {
   _isMounted = false;
@@ -111,7 +111,10 @@ export class EditUser extends React.Component {
     } else {
       return (
         <div id="new-user">
-          <Form onSubmit={this.handleSubmit} style={{ marginTop: "20%" }}>
+          <Link to="/users">
+            <Icon style={{ margin: "1rem" }} name="arrow left" />
+          </Link>
+          <Form onSubmit={this.handleSubmit} style={{ marginTop: "5%" }}>
             <Form.Field>
               <Label color="blue" ribbon>
                 <Icon name="user circle" />
