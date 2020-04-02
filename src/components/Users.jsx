@@ -25,9 +25,10 @@ export class Users extends React.Component {
                   to={"/users/" + data[i]._id}
                   style={{ marginRight: "25%" }}
                 >
-                  <Icon title="Modifier" name="edit" />
+                  <Icon title="Modifier" name="edit" size="large" />
                 </Link>
                 <Icon
+                  size="large"
                   title="Supprimer"
                   name="trash alternate"
                   data-id={data[i]._id}

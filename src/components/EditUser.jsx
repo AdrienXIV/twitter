@@ -112,7 +112,7 @@ export class EditUser extends React.Component {
       return (
         <div id="new-user">
           <Link to="/users">
-            <Icon style={{ margin: "1rem" }} name="arrow left" />
+            <Icon style={{ margin: "1rem" }} name="arrow left" size="large" />
           </Link>
           <Form onSubmit={this.handleSubmit} style={{ marginTop: "5%" }}>
             <Form.Field>
