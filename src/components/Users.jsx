@@ -21,7 +21,10 @@ export class Users extends React.Component {
             ...this.state.content,
             <List.Item key={data[i]._id}>
               <List.Content floated="right" style={{ display: "flex" }}>
-                <Link to={"/users/" + data[i]._id}>
+                <Link
+                  to={"/users/" + data[i]._id}
+                  style={{ marginRight: "25%" }}
+                >
                   <Icon title="Modifier" name="edit" />
                 </Link>
                 <Icon
