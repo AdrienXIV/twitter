@@ -81,7 +81,14 @@ i {
   }
 }
 #users {
-  padding: 1rem;
+  padding: 1% 1rem 1rem 1rem;
+}
+
+.trash.alternate.icon:hover {
+  color: #ea2027;
+}
+.edit.icon:hover {
+  color: blue;
 }
 
 @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-device-pixel-ratio: 3) {
@@ -136,12 +143,6 @@ i {
       }
       .right.floated.content {
         margin-top: 2.5%;
-        i {
-          cursor: pointer;
-        }
-        i:hover {
-          color: #ea2027;
-        }
       }
     }
     .item:hover {

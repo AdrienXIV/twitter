@@ -20,7 +20,10 @@ export class Users extends React.Component {
           content: [
             ...this.state.content,
             <List.Item key={data[i]._id}>
-              <List.Content floated="right">
+              <List.Content floated="right" style={{ display: "flex" }}>
+                <Link to={"/users/" + data[i]._id}>
+                  <Icon title="Modifier" name="edit" />
+                </Link>
                 <Icon
                   title="Supprimer"
                   name="trash alternate"

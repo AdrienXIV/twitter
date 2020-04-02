@@ -20,6 +20,38 @@ class API extends React.Component {
       }
     });
   }
+  
+  /**
+   *
+   * get
+   *
+   */
+
+  //Récupérer les utilisateurs enregistrés dans la BDD
+  getUsers() {
+    return axios.request({
+      url: __URL + "/api/user/",
+      method: "GET",
+      headers: {
+        token: COOKIE.getCookie("token")
+      }
+    });
+  }
+  getUser(id) {
+    return axios.request({
+      url: __URL + "/api/user/" + id,
+      method: "GET",
+      headers: {
+        token: COOKIE.getCookie("token")
+      }
+    });
+  }
+
+  /**
+   *
+   * set
+   *
+   */
 
   /**
    * Ajouter un nouvel utilisateur twitter
@@ -41,21 +73,17 @@ class API extends React.Component {
   }
 
   /**
-   * Récupérer les utilisateurs enregistrés dans la BDD
+   * Modifier l'ordre d'un utilisateur twitter
+   * @param {Number} order
+   * @param {String} id
    */
-  getUsers() {
-    return axios.request({
-      url: __URL + "/api/user/",
-      method: "GET",
-      headers: {
-        token: COOKIE.getCookie("token")
-      }
-    });
-  }  
-  getUser(id) {
+  editUser(order, id) {
     return axios.request({
       url: __URL + "/api/user/" + id,
-      method: "GET",
+      method: "PATCH",
+      data: {
+        order
+      },
       headers: {
         token: COOKIE.getCookie("token")
       }
