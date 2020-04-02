@@ -35,7 +35,7 @@ export class Users extends React.Component {
                   onClick={this.handleClick}
                 />
               </List.Content>
-              <Link to={"/twitter/" + data[i].name}>
+              <Link to={"/twitter/" + data[i].name} style={{width:"fit-content"}}>
                 <List.Icon
                   name="user circle"
                   size="big"
