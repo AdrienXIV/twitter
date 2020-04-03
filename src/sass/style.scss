@@ -48,7 +48,7 @@ i {
     width: 100%;
     .content {
       margin-top: 2.5%;
-      width: max-content;
+      width: 100%;
     }
   }
   .description {
@@ -60,7 +60,7 @@ i {
       word-break: break-all;
     }
     .header {
-      width: max-content;
+      width: auto;
     }
     .created_at {
       text-align: right;
