@@ -1,8 +1,8 @@
-import React from "react";
-import io from "../utils/Socket.io";
-import { User } from "./User";
-import { Icon, List, Button } from "semantic-ui-react";
-import { COOKIE } from "../utils/Cookie";
+import React from 'react';
+import io from '../utils/Socket.io';
+import { User } from './User';
+import { Icon, List, Button } from 'semantic-ui-react';
+import { COOKIE } from '../utils/Cookie';
 
 export class Twitter extends React.Component {
   _isMounted = false;
@@ -12,7 +12,7 @@ export class Twitter extends React.Component {
     this.state = {
       userHistory: [],
       users: [],
-      hasError: false
+      hasError: false,
     };
     this.UserElement = React.createRef();
     this.handleClick = this.handleClick.bind(this);
@@ -24,32 +24,37 @@ export class Twitter extends React.Component {
 
     io.socket.open();
     io.functions.getUsers();
-    io.socket.on("twitter_users", user => {
+    io.socket.on('twitter_users', (user) => {
       if (this._isMounted) {
         this.setState({
-          users: [...this.state.users, user]
+          users: [...this.state.users, user],
         });
       }
     });
   }
 
   checkCookieNumberOfTweets() {
-    if (COOKIE.getCookie("number_of_tweets") === (null || "")) {
-      let count = window.prompt("Nombres de tweets ?", "5");
-      COOKIE.setCookie("number_of_tweets", count, 1);
+    if (COOKIE.getCookie('number_of_tweets') === (null || '')) {
+      let count = window.prompt('Nombres de tweets ?', '5');
+      COOKIE.setCookie('number_of_tweets', count, 1);
     } else {
       // réactualisation du cookie
       COOKIE.setCookie(
-        "number_of_tweets",
-        COOKIE.getCookie("number_of_tweets"),
+        'number_of_tweets',
+        COOKIE.getCookie('number_of_tweets'),
         1
       );
     }
   }
 
   handleClick = () => {
-    let count = window.prompt("Nombres de tweets ?", "5");
-    COOKIE.setCookie("number_of_tweets", count, 1);
+    let count = window.prompt('Nombres de tweets ?', '5');
+    COOKIE.setCookie('number_of_tweets', count, 1);
+
+    // mettre en cache les tweets récents côté serveur
+    this.state.users.forEach((user) => {
+      io.functions.refreshUserTweets(user.screen_name, count);
+    });
     document.location.reload();
   };
 
@@ -62,7 +67,7 @@ export class Twitter extends React.Component {
     // Display fallback UI
     this.setState({ hasError: true });
     // You can also log the error to an error reporting service
-    alert(error + "\n" + info);
+    alert(error + '\n' + info);
   }
   getUsers() {
     let users_profiles = [];
@@ -88,9 +93,9 @@ export class Twitter extends React.Component {
     } else {
       return (
         <div className="twitter">
-          <List style={{ padding: "1em 1em 0 1em" }}>
+          <List style={{ padding: '1em 1em 0 1em' }}>
             <List.Item>
-              <List.Content style={{ marginTop: "2%" }} floated="right">
+              <List.Content style={{ marginTop: '2%' }} floated="right">
                 <Icon
                   onClick={() => {
                     document.location.reload();
@@ -107,9 +112,9 @@ export class Twitter extends React.Component {
                 icon="twitter"
                 label={{
                   basic: true,
-                  color: "blue",
-                  pointing: "left",
-                  content: Number(COOKIE.getCookie("number_of_tweets"))
+                  color: 'blue',
+                  pointing: 'left',
+                  content: Number(COOKIE.getCookie('number_of_tweets')),
                 }}
               />
             </List.Item>

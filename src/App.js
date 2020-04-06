@@ -1,37 +1,36 @@
-import React from "react";
-import { COOKIE } from "./utils/Cookie";
+import React from 'react';
+import { COOKIE } from './utils/Cookie';
 import {
   Route,
   Switch,
   BrowserRouter as Router,
-  Redirect
-} from "react-router-dom";
-import { Home } from "./components/Home";
-import { Login } from "./components/Login";
-import { Logout } from "./components/Logout";
-import { NewUser } from "./components/NewUser";
-import { Twitter } from "./components/Twitter";
-import { Navbar } from "./components/Navbar";
-import { Users } from "./components/Users";
-import API from "./utils/API";
-import io from "./utils/Socket.io";
-import { UserProfile } from "./components/UserProfile";
-import { EditUser } from "./components/EditUser";
+  Redirect,
+} from 'react-router-dom';
+import { Home } from './components/Home';
+import { Login } from './components/Login';
+import { Logout } from './components/Logout';
+import { NewUser } from './components/NewUser';
+import { Twitter } from './components/Twitter';
+import { Navbar } from './components/Navbar';
+import { Users } from './components/Users';
+import API from './utils/API';
+import io from './utils/Socket.io';
+import { UserProfile } from './components/UserProfile';
+import { EditUser } from './components/EditUser';
 
-//TODO: tester deploiement sur heroku
 /*const PageNotFound = () => {
   return <h1>404</h1>;
 };*/
 const ProtectedRoute = ({ ...props }) => {
   let socketAuth = true;
-  io.socket.on("unauthorized", res => {
+  io.socket.on('unauthorized', (res) => {
     res === 0 ? (socketAuth = false) : (socketAuth = true);
   });
   // redirection si jamais le token envoyé dans les sockets est erroné
   if (socketAuth) {
     // réponse synchrone du serveur
     return API.checkAuth().status !== 200 ||
-      COOKIE.getCookie("token").length < 200 ? (
+      COOKIE.getCookie('token').length < 200 ? (
       <Redirect to="/login" />
     ) : (
       <Route {...props} />
@@ -49,37 +48,37 @@ const App = () => {
         <Route exact path="/login" component={Login} />
         <Route exact path="/logout" component={Logout} />
         <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
+          isAllowed={COOKIE.getCookie('token')}
           exact
           path="/"
           component={Home}
         />
         <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
+          isAllowed={COOKIE.getCookie('token')}
           exact
           path="/users"
           component={Users}
         />
         <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
+          isAllowed={COOKIE.getCookie('token')}
           exact
           path="/users/:id"
           component={EditUser}
         />
         <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
+          isAllowed={COOKIE.getCookie('token')}
           exact
           path="/new"
           component={NewUser}
         />
         <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
+          isAllowed={COOKIE.getCookie('token')}
           exact
           path="/twitter"
           component={Twitter}
         />
         <ProtectedRoute
-          isAllowed={COOKIE.getCookie("token")}
+          isAllowed={COOKIE.getCookie('token')}
           exact
           path="/twitter/:user"
           component={UserProfile}
