@@ -1,14 +1,14 @@
-import React from "react";
-import { Image, List, Segment, Icon } from "semantic-ui-react";
-import { Tweet } from "./Tweet";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Image, List, Segment, Icon } from 'semantic-ui-react';
+import { Tweet } from './Tweet';
+import { Link } from 'react-router-dom';
 
 export class User extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
       tweets: [],
-      isClicked: false
+      isClicked: false,
     };
     this.handleClick = this.handleClick.bind(this);
     this.TweetElement = React.createRef();
@@ -16,7 +16,7 @@ export class User extends React.Component {
 
   handleClick = () => {
     this.setState({
-      isClicked: this.state.isClicked ? false : true
+      isClicked: this.state.isClicked ? false : true,
     });
   };
 
@@ -62,7 +62,7 @@ export class User extends React.Component {
               {this.firstIconRender()}
             </List.Content>
             <div className="tweet-header">
-              <Link to={"/twitter/" + this.props.screen_name}>
+              <Link to={'/twitter/' + this.props.screen_name}>
                 <Image avatar src={this.props.profile_image_url_https} />
                 <List.Content>
                   <List.Header>
@@ -85,7 +85,7 @@ export class User extends React.Component {
           <List.Content
             verticalAlign="middle"
             floated="right"
-            style={{ textAlign: "right" }}
+            style={{ textAlign: 'right' }}
           >
             {this.lastIconRender()}
           </List.Content>

@@ -1,8 +1,8 @@
-import React from "react";
-import { Image, List, Segment, Icon } from "semantic-ui-react";
-import io from "../utils/Socket.io";
-import decodeHtml from "decode-html";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { Image, List, Segment, Icon } from 'semantic-ui-react';
+import io from '../utils/Socket.io';
+import decodeHtml from 'decode-html';
+import { Link } from 'react-router-dom';
 
 export class UserProfile extends React.Component {
   constructor(props) {
@@ -10,25 +10,25 @@ export class UserProfile extends React.Component {
     this.state = {
       isShowed: false,
       user: {},
-      error: false
+      error: false,
     };
   }
   componentDidMount() {
     io.socket.open();
     io.functions.checkScreenName(this.props.match.params.user);
 
-    io.socket.on("twitter_user", data => {
+    io.socket.on('twitter_user', (data) => {
       if (data.errors !== undefined) {
         if (data.errors[0].code === 50) {
           this.setState({
-            error: true
+            error: true,
           });
         }
       } else {
         this.setState({
           error: false,
           user: data,
-          isShowed: true
+          isShowed: true,
         });
       }
     });
@@ -70,7 +70,7 @@ export class UserProfile extends React.Component {
 
   render() {
     if (this.state.error) {
-      return <h2 style={{ padding: "1rem" }}>Utilisateur inexistant.</h2>;
+      return <h2 style={{ padding: '1rem' }}>Utilisateur inexistant.</h2>;
     } else if (this.state.isShowed) {
       return (
         <Segment>
@@ -81,7 +81,7 @@ export class UserProfile extends React.Component {
             <List.Item>
               <div className="tweet-header">
                 <Image
-                  style={{ width: "100%" }}
+                  style={{ width: '100%' }}
                   src={this.state.user.profile_banner_url}
                 />
                 <Image
@@ -90,7 +90,7 @@ export class UserProfile extends React.Component {
                   src={this.state.user.profile_image_url_https}
                 />
               </div>
-              <List.Content style={{ marginTop: "10%", fontSize: "larger" }}>
+              <List.Content style={{ marginTop: '10%', fontSize: 'larger' }}>
                 <List.Header>
                   {this.state.user.name} {this.isVerified()}
                 </List.Header>
@@ -99,7 +99,7 @@ export class UserProfile extends React.Component {
                 </List.Description>
               </List.Content>
             </List.Item>
-            <List.Content style={{ marginTop: "2.5%", fontSize: "larger" }}>
+            <List.Content style={{ marginTop: '2.5%', fontSize: 'larger' }}>
               {this.getUrl(this.state.user)}
             </List.Content>
           </List>

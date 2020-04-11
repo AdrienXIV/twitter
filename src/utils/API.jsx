@@ -77,12 +77,13 @@ class API extends React.Component {
    * @param {Number} order
    * @param {String} id
    */
-  editUser(order, id) {
+  editUser(order,isBan, id) {
     return axios.request({
       url: __URL + "/api/user/" + id,
       method: "PATCH",
       data: {
-        order
+        order,
+        isBan
       },
       headers: {
         token: COOKIE.getCookie("token")

@@ -1,14 +1,14 @@
-import React from "react";
-import API from "../utils/API";
-import { List, Icon } from "semantic-ui-react";
-import { Link } from "react-router-dom";
+import React from 'react';
+import API from '../utils/API';
+import { List, Icon } from 'semantic-ui-react';
+import { Link } from 'react-router-dom';
 
 export class Users extends React.Component {
   constructor(props) {
     super();
     this.state = {
       promiseIsResolved: false,
-      content: []
+      content: [],
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -20,13 +20,7 @@ export class Users extends React.Component {
           content: [
             ...this.state.content,
             <List.Item key={data[i]._id}>
-              <List.Content floated="right" style={{ display: "flex" }}>
-                <Link
-                  to={"/users/" + data[i]._id}
-                  style={{ marginRight: "25%" }}
-                >
-                  <Icon title="Modifier" name="edit" size="large" />
-                </Link>
+              <List.Content floated="right" style={{ display: 'flex' }}>
                 <Icon
                   size="large"
                   title="Supprimer"
@@ -35,35 +29,52 @@ export class Users extends React.Component {
                   onClick={this.handleClick}
                 />
               </List.Content>
-              <Link to={"/twitter/" + data[i].name} style={{width:"fit-content"}}>
+              <Link
+                to={'/users/' + data[i]._id}
+                style={{ width: 'fit-content' }}
+              >
                 <List.Icon
                   name="user circle"
                   size="big"
                   verticalAlign="middle"
                 />
                 <List.Content>
-                  <List.Header>
-                    <Icon name="at" />
-                    {data[i].name}
-                  </List.Header>
+                  {(() => {
+                    if (data[i].isBan) {
+                      return (
+                        <List.Header style={{ color: '#eb2f06' }}>
+                          <Icon name="at" />
+                          {data[i].name}
+                        </List.Header>
+                      );
+                    } else {
+                      return (
+                        <List.Header>
+                          <Icon name="at" />
+                          {data[i].name}
+                        </List.Header>
+                      );
+                    }
+                  })()}
+
                   <List.Description>
-                    {"Ordre : " + data[i].order}
+                    {'Ordre : ' + data[i].order}
                   </List.Description>
                 </List.Content>
               </Link>
-            </List.Item>
-          ]
+            </List.Item>,
+          ],
         });
       }
       this.setState({ promiseIsResolved: true });
     });
   }
 
-  handleClick = e => {
-    let r = window.confirm("Confirmer la suppression ?");
+  handleClick = (e) => {
+    let r = window.confirm('Confirmer la suppression ?');
     if (r) {
       API.deleteUser(e.target.dataset.id)
-        .then(res => {
+        .then((res) => {
           if (res.status === 200) {
             let content = [...this.state.content];
             content.forEach((item, index) => {
@@ -74,7 +85,7 @@ export class Users extends React.Component {
             });
           }
         })
-        .catch(err => {
+        .catch((err) => {
           alert(err);
         });
     }
