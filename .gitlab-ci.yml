@@ -1,0 +1,21 @@
+image: node:10.5.0
+
+before_script:
+  - echo "Installation des dépendances"
+  - npm install
+  - echo "Création du dossier /build"
+  - npm run build
+
+stages:
+  - deploy
+
+deploy:
+  stage: deploy
+  environment:
+    name: production
+    url: https://quizzical-pike-be54df.netlify.com/
+  only:
+    - master
+  script:
+    - npm install netlify-cli -g
+#    - netlify deploy --site $NETLIFY_SITE_ID --auth $NETLIFY_AUTH_TOKEN --prod
