@@ -9,7 +9,7 @@
     "axios": "^0.19.2",
     "decode-html": "^2.0.0",
     "jquery": "^3.4.1",
-    "node-sass": "^4.13.1",
+    "node-sass": "^7.0.0",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-html-parser": "^2.0.2",
